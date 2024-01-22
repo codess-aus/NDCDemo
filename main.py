@@ -17,36 +17,33 @@ def get_computer_choice():
     # Return the computer's choice
     return computer_choice
 
-def main(user_choice, computer_choice):
-    # Initialize scores for user and computer
-    user_score = 0
-    computer_score = 0
-
-    # Define the game rules
+def get_result(user_choice, computer_choice):
     game_rules = {
         'rock': {'rock': 'tie', 'paper': 'computer', 'scissors': 'user'},
         'paper': {'rock': 'user', 'paper': 'tie', 'scissors': 'computer'},
         'scissors': {'rock': 'computer', 'paper': 'user', 'scissors': 'tie'}
     }
+    return game_rules[user_choice][computer_choice]
 
-    # Check if user's choice is valid
-    if user_choice in game_rules:
-        result = game_rules[user_choice][computer_choice]
-        if result == 'user':
-            print("You win!")
-            user_score += 1
-        elif result == 'computer':
-            print("The computer wins!")
-            computer_score += 1
-        else:
-            print("It's a tie!")
+def update_scores(result, user_score, computer_score):
+    if result == 'user':
+        user_score += 1
+    elif result == 'computer':
+        computer_score += 1
+    return user_score, computer_score
+
+def main(user_choice, computer_choice):
+    user_score = 0
+    computer_score = 0
+
+    if user_choice in ['rock', 'paper', 'scissors']:
+        result = get_result(user_choice, computer_choice)
+        user_score, computer_score = update_scores(result, user_score, computer_score)
+        print(f"Result: {result.capitalize()}")
     else:
         print("That's not a valid choice!")
 
-    # Print the scores
     print(f"Score: You - {user_score}, Computer - {computer_score}")
-
-    # Return the scores
     return user_score, computer_score
 # Check if this script is the main module
 if __name__ == "__main__":
